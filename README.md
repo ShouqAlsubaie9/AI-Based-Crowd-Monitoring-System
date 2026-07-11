@@ -2,99 +2,137 @@
 
 > Master's Graduation Project
 
-An AI-powered crowd monitoring system designed to improve public safety during large-scale events by combining computer vision, deep learning, and intelligent behavior analysis.
+An intelligent AI-powered surveillance system developed to monitor crowded environments and support security personnel through real-time crowd analysis, behavior monitoring, and anomaly detection.
 
-The system performs real-time people detection, multi-object tracking, gender classification, crowd density estimation, and behavioral anomaly detection using state-of-the-art deep learning models.
+![Python](https://img.shields.io/badge/Python-3.x-blue)
+![YOLOv8](https://img.shields.io/badge/YOLOv8-Ultralytics-red)
+![ByteTrack](https://img.shields.io/badge/ByteTrack-Multi--Object%20Tracking-green)
+![Vision Transformer](https://img.shields.io/badge/Vision%20Transformer-ViT-orange)
+![OpenCV](https://img.shields.io/badge/OpenCV-Computer%20Vision-lightgrey)
 
 ---
 
 # Project Overview
 
-Managing large crowds at stadiums, concerts, festivals, airports, and public events presents significant safety challenges. Traditional surveillance systems rely heavily on human operators, making it difficult to detect abnormal situations in real time.
+Large public events such as concerts, sports matches, festivals, and exhibitions require continuous monitoring to ensure crowd safety. Manual surveillance is often inefficient due to the large number of people and the difficulty of identifying abnormal situations in real time.
 
-This project introduces an intelligent surveillance system capable of automatically monitoring crowd movement and detecting abnormal behaviors to support security personnel in making faster and more informed decisions.
+This project presents an AI-based crowd monitoring system that combines computer vision and deep learning techniques to automate crowd analysis. The system performs real-time head detection, multi-object tracking, gender classification, crowd density estimation, occupancy monitoring, and behavioral anomaly detection to improve situational awareness and support security decision-making.
+
+Unlike conventional surveillance systems that rely on full-body detection, this project utilizes a custom-trained YOLOv8 head detection model. Head detection provides more reliable performance in crowded environments where people are frequently affected by body occlusion, allowing the system to maintain accurate counting and tracking.
 
 ---
 
 # Key Features
 
-✔ Real-time person detection
+- Real-time head detection using a custom-trained YOLOv8 model
+- Multi-object tracking with ByteTrack
+- Gender classification using Vision Transformer (ViT)
+- Crowd counting
+- Crowd density estimation
+- Occupancy monitoring
+- Zone-based crowd analytics
+- Loitering detection
+- Abnormal speed detection
+- Crowd surge detection
+- Live visual monitoring dashboard
+- Automatic statistical reporting
 
-✔ Multi-object tracking
+---
 
-✔ Gender classification
+# Why Head Detection?
 
-✔ Crowd counting
+Traditional person detection models often experience reduced accuracy in crowded environments because people partially block each other.
 
-✔ Crowd density estimation
-
-✔ Occupancy monitoring
-
-✔ Loitering detection
-
-✔ Abnormal speed detection
-
-✔ Crowd surge detection
-
-✔ Zone-based analytics
-
-✔ Real-time alerts
-
-✔ Live dashboard
-
-✔ Automatic report generation
+To overcome this limitation, the proposed system detects heads instead of full bodies. Since heads remain visible in highly crowded scenes, this approach significantly improves detection robustness, tracking continuity, and crowd counting accuracy in high-density environments such as stadium entrances and event gates.
 
 ---
 
 # System Workflow
 
+```
 Video Input
-
-↓
-
-YOLOv8 Detection
-
-↓
-
-ByteTrack Tracking
-
-↓
-
+      │
+      ▼
+YOLOv8 Head Detection
+      │
+      ▼
+ByteTrack Multi-Object Tracking
+      │
+      ▼
 Vision Transformer Gender Classification
-
-↓
-
-People Counting
-
-↓
-
-Crowd Density Estimation
-
-↓
-
+      │
+      ▼
+Crowd Counting & Density Estimation
+      │
+      ▼
 Behavior Analysis
-
-↓
-
-Real-Time Alerts
-
-↓
-
-Output Dashboard & Reports
+(Loitering • Speed • Crowd Surge)
+      │
+      ▼
+Real-Time Dashboard & Reports
+```
 
 ---
 
 # Technologies Used
 
+## Programming
+
 - Python
+- OpenCV
+- NumPy
+- Pillow (PIL)
+
+## Deep Learning
+
 - YOLOv8
 - ByteTrack
 - Vision Transformer (ViT)
-- OpenCV
 - PyTorch
 - Hugging Face Transformers
-- NumPy
-- Pillow (PIL)
+
+---
+
+# Core Modules
+
+## Head Detection
+
+A custom-trained YOLOv8 model detects human heads in surveillance footage to improve detection performance under crowded conditions.
+
+---
+
+## Multi-Object Tracking
+
+ByteTrack assigns a unique ID to each detected individual and maintains identity consistency across video frames.
+
+---
+
+## Gender Classification
+
+Detected head regions are classified using a Vision Transformer (ViT) model to estimate gender distribution within monitored areas.
+
+---
+
+## Crowd Analytics
+
+The system continuously analyzes crowd movement and provides:
+
+- Total crowd count
+- Zone occupancy
+- Crowd density estimation
+- Area statistics
+
+---
+
+## Behavioral Analysis
+
+The monitoring framework identifies abnormal crowd behaviors including:
+
+- Loitering
+- Abnormal walking speed
+- Crowd surge
+
+These events are highlighted in real time to assist security personnel.
 
 ---
 
@@ -102,132 +140,95 @@ Output Dashboard & Reports
 
 The system was evaluated using two surveillance datasets.
 
-## Indoor Mall Dataset
+### Indoor Mall Dataset
 
 - Used for testing
 - Approximately 8,000–10,000 extracted video frames
 - Medium crowd density
 
-## Custom Outdoor Dataset
+### Custom Outdoor Dataset
 
 - Used for training and testing
 - Approximately 12,000–15,000 extracted video frames
-- Medium to High crowd density
+- Medium to high crowd density
 
-Overall evaluation was performed using more than **20,000 extracted video frames**. :contentReference[oaicite:0]{index=0}
-
----
-
-# Detection Performance
-
-| Metric | Result |
-|---------|--------|
-| Precision | 90% |
-| Recall | 88% |
-| mAP | 89% |
-| Low-Light mAP | 83% |
-
-The detection model demonstrated strong performance in real-world surveillance environments while maintaining reliable real-time processing. :contentReference[oaicite:1]{index=1}
+Overall evaluation was conducted using more than **20,000 extracted video frames**.
 
 ---
 
-# Tracking Performance
+# Project Structure
 
-- 91% tracking continuity during partial occlusion
-- 85% re-identification accuracy
-- Low ID switch rate in crowded scenes
-- Robust tracking using ByteTrack
-
-:contentReference[oaicite:2]{index=2}
-
----
-
-# Gender Classification
-
-The Vision Transformer (ViT) model achieved:
-
-**98.7% classification accuracy**
-
-allowing accurate demographic analysis of monitored areas. :contentReference[oaicite:3]{index=3}
-
----
-
-# Behavior Analysis
-
-The system automatically detects:
-
-- Loitering
-- Abnormal Speed
-- Crowd Surge
-
-Performance:
-
-| Task | Accuracy |
-|------|----------|
-| Loitering Detection | 87% |
-| Abnormal Speed Detection | 90% |
-| Crowd Surge Detection | 92% |
-
-:contentReference[oaicite:4]{index=4}
-
----
-
-# Output
-
-The system provides:
-
-- Annotated surveillance videos
-- Live dashboard
-- Crowd statistics
-- Gender statistics
-- Occupancy information
-- Crowd alerts
-- Summary reports
-
----
-
-# Folder Structure
-
-```text
+```
 AI-Based-Crowd-Monitoring-System
 │
-├── src/
-├── models/
-├── datasets/
-├── screenshots/
-├── results/
-├── demo/
 ├── README.md
-├── requirements.txt
 ├── LICENSE
-└── .gitignore
+├── .gitignore
+├── requirements.txt
+│
+├── src/
+│
+├── models/
+│
+├── datasets/
+│
+├── screenshots/
+│
+├── results/
+│
+├── demo/
+│
+└── docs/
 ```
+
+---
+
+# Results
+
+The proposed system successfully demonstrated the ability to:
+
+- Detect individuals in crowded environments using head detection
+- Maintain consistent tracking with ByteTrack
+- Classify gender using Vision Transformer
+- Estimate crowd density in real time
+- Detect loitering behavior
+- Detect abnormal movement speed
+- Detect crowd surge events
+- Generate visual analytics for crowd monitoring
 
 ---
 
 # Future Improvements
 
-- Face Recognition
-- Thermal Camera Support
-- Multi-Camera Tracking
-- Weapon Detection
-- Cloud Deployment
-- Mobile Dashboard
-- Real-Time Notifications
+Future development may include:
+
+- Face recognition integration
+- Multi-camera tracking
+- Weapon detection
+- Cloud deployment
+- Mobile monitoring dashboard
+- Real-time notification system
+- Thermal camera support
 
 ---
 
 # Screenshots
 
-> Add screenshots demonstrating:
+Add screenshots demonstrating:
 
-- Person Detection
-- Tracking IDs
+- Head Detection
+- Multi-Object Tracking
 - Gender Classification
-- Crowd Density Dashboard
+- Crowd Density Estimation
 - Loitering Detection
-- Crowd Surge Alerts
-- Heatmaps
+- Crowd Surge Detection
+- Dashboard Interface
+
+---
+
+# Disclaimer
+
+This repository represents the implementation of my Master's graduation project. Certain datasets, trained models, or supporting files may not be included due to academic or licensing restrictions.
 
 ---
 
@@ -235,12 +236,13 @@ AI-Based-Crowd-Monitoring-System
 
 **Shouq Alsubaie**
 
-Master's Degree in Cybercrime and Digital Forensic Investigation
+Master's in Cybercrime and Digital Forensic Investigation
 
-Interested in:
+**Areas of Interest**
 
+- Cybersecurity
 - Security Operations (SOC)
 - Digital Forensics
-- Computer Vision
-- Artificial Intelligence
 - Threat Intelligence
+- Artificial Intelligence
+- Computer Vision
